@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>栈序AI - 下载中心</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    background: radial-gradient(1200px 600px at 20% 20%, #16203a 0%, #0b1020 60%);
+    color: #f2f5ff;
+    padding: 24px;
+  }
+  .card {
+    max-width: 460px; width: 100%;
+    background: rgba(28, 36, 56, 0.9);
+    border: 1px solid #2a3554;
+    border-radius: 20px;
+    padding: 36px 32px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.5);
+    text-align: center;
+  }
+  .logo {
+    width: 84px; height: 84px; border-radius: 22px;
+    background: linear-gradient(135deg,#1d6fff,#5cc8ff);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 36px; color: #fff;
+    margin: 0 auto 20px;
+    box-shadow: 0 8px 24px rgba(29,111,255,.4);
+  }
+  h1 { font-size: 26px; margin-bottom: 6px; letter-spacing: 1px; }
+  .sub { color: #8a94ab; font-size: 14px; margin-bottom: 26px; }
+  .meta {
+    background: #0f1626; border-radius: 12px;
+    padding: 14px 18px; margin-bottom: 22px;
+    text-align: left; font-size: 13px; line-height: 1.9; color: #bcd3ff;
+  }
+  .meta b { color: #5cc8ff; display: inline-block; min-width: 76px; font-weight: 600; }
+  .btn {
+    display: block; width: 100%; padding: 16px; border-radius: 14px;
+    background: linear-gradient(135deg,#1d6fff,#5cc8ff);
+    color: #fff; font-size: 17px; font-weight: 700; text-decoration: none;
+    transition: transform .15s, box-shadow .15s;
+    box-shadow: 0 8px 24px rgba(29,111,255,.4);
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(29,111,255,.55); }
+  .tip { margin-top: 16px; font-size: 12px; color: #6b7590; line-height: 1.8; }
+  .status { margin-top: 12px; font-size: 13px; color: #4ade80; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">栈</div>
+    <h1>栈序AI</h1>
+    <p class="sub">iQOO Watch GT2 · BlueOS 3 智能助手</p>
+
+    <div class="meta">
+      <div><b>版本</b> 1.0.0 (debug)</div>
+      <div><b>包名</b> com.zhanxu.ai</div>
+      <div><b>格式</b> .rpk</div>
+      <div><b>大小</b> 约 164 KB</div>
+      <div><b>说明</b> 已内置百度千帆 API Key，可直连对话</div>
+    </div>
+
+    <a class="btn" href="/stack-order-ai-1.0.0-debug.rpk" download="stack-order-ai-1.0.0-debug.rpk">⬇ 下载安装包</a>
+
+    <p class="tip">⚠️ 包内包含你的私有 API Key，仅限本人安装调试，请勿对外分发。</p>
+    <p class="status" id="status">服务运行中</p>
+  </div>
+  <script>
+    fetch('/stack-order-ai-1.0.0-debug.rpk', { method: 'HEAD' })
+      .then(r => r.ok
+        ? document.getElementById('status').textContent = '✓ 安装包就绪，可点击下载'
+        : document.getElementById('status').textContent = '✗ 安装包不可用（' + r.status + '）')
+      .catch(() => document.getElementById('status').textContent = '✗ 无法连接服务');
+  </script>
+</body>
+</html>
