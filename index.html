@@ -7,48 +7,51 @@
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
-    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
     min-height: 100vh;
     display: flex; align-items: center; justify-content: center;
-    background: radial-gradient(1200px 600px at 20% 20%, #16203a 0%, #0b1020 60%);
-    color: #f2f5ff;
+    background: #0b1020;
+    color: #ffffff;
     padding: 24px;
   }
   .card {
-    max-width: 460px; width: 100%;
-    background: rgba(28, 36, 56, 0.9);
-    border: 1px solid #2a3554;
+    max-width: 480px; width: 100%;
+    background: #1c2438;
+    border: 2px solid #3a4a75;
     border-radius: 20px;
-    padding: 36px 32px;
-    box-shadow: 0 20px 60px rgba(0,0,0,.5);
+    padding: 40px 34px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.6);
     text-align: center;
   }
   .logo {
-    width: 84px; height: 84px; border-radius: 22px;
+    width: 90px; height: 90px; border-radius: 24px;
     background: linear-gradient(135deg,#1d6fff,#5cc8ff);
     display: flex; align-items: center; justify-content: center;
-    font-weight: 800; font-size: 36px; color: #fff;
-    margin: 0 auto 20px;
-    box-shadow: 0 8px 24px rgba(29,111,255,.4);
+    font-weight: 800; font-size: 40px; color: #ffffff;
+    margin: 0 auto 22px;
+    box-shadow: 0 8px 24px rgba(29,111,255,.5);
   }
-  h1 { font-size: 26px; margin-bottom: 6px; letter-spacing: 1px; }
-  .sub { color: #8a94ab; font-size: 14px; margin-bottom: 26px; }
+  h1 { font-size: 34px; font-weight: 800; margin-bottom: 8px; letter-spacing: 2px; color:#ffffff; }
+  .sub { color: #aebcdf; font-size: 17px; margin-bottom: 28px; font-weight: 600; }
   .meta {
-    background: #0f1626; border-radius: 12px;
-    padding: 14px 18px; margin-bottom: 22px;
-    text-align: left; font-size: 13px; line-height: 1.9; color: #bcd3ff;
+    background: #0f1626;
+    border: 1px solid #2a3554;
+    border-radius: 12px;
+    padding: 18px 22px; margin-bottom: 26px;
+    text-align: left; font-size: 17px; line-height: 2.1;
   }
-  .meta b { color: #5cc8ff; display: inline-block; min-width: 76px; font-weight: 600; }
+  .meta div { color: #e4ebff; font-weight: 500; }
+  .meta b { color: #5cc8ff; display: inline-block; min-width: 82px; font-weight: 800; }
   .btn {
-    display: block; width: 100%; padding: 16px; border-radius: 14px;
+    display: block; width: 100%; padding: 18px; border-radius: 14px;
     background: linear-gradient(135deg,#1d6fff,#5cc8ff);
-    color: #fff; font-size: 17px; font-weight: 700; text-decoration: none;
+    color: #ffffff; font-size: 21px; font-weight: 800; text-decoration: none;
     transition: transform .15s, box-shadow .15s;
-    box-shadow: 0 8px 24px rgba(29,111,255,.4);
+    box-shadow: 0 8px 24px rgba(29,111,255,.5);
   }
-  .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(29,111,255,.55); }
-  .tip { margin-top: 16px; font-size: 12px; color: #6b7590; line-height: 1.8; }
-  .status { margin-top: 12px; font-size: 13px; color: #4ade80; }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(29,111,255,.65); }
+  .tip { margin-top: 18px; font-size: 15px; color: #ffb3ad; line-height: 1.9; font-weight: 600; }
+  .status { margin-top: 12px; font-size: 16px; color: #4ade80; font-weight: 700; }
 </style>
 </head>
 <body>
