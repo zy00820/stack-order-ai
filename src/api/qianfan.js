@@ -3,22 +3,38 @@
  * 基于 OpenAI 兼容的千帆 v2 对话接口：
  * POST https://qianfan.baidubce.com/v2/chat/completions
  * 鉴权方式：Authorization: Bearer <API Key>
+ *
+ * 密钥读取优先级：
+ * 1. 环境变量 QIANFAN_API_KEY / QIANFAN_MODEL（打包时通过 NODE_ENV 等注入）
+ * 2. 本地配置文件 src/config/ai.config.local.js（已被 .gitignore 忽略）
+ * 3. 回退到下面的占位符（仅用于开发演示，勿生产使用）
  */
 import fetch from '@blueos.network.fetch'
 
-// 百度千帆 OpenAI 兼容接口的 API Key（控制台「应用接入」获取）
-// 注意：请将下面的占位符替换为你自己的 API Key，不要提交真实密钥到公开仓库。
-// 生产环境建议通过安全后端代理，不要把密钥直接内置到手表应用。
-const QIANFAN_API_KEY = 'YOUR_QIANFAN_API_KEY'
+let config = {}
+try {
+  config = require('./config/ai.config.local.js') || {}
+} catch (e) {
+  // 本地配置文件不存在时忽略，使用默认占位符
+}
 
 const QIANFAN_CHAT_URL = 'https://qianfan.baidubce.com/v2/chat/completions'
-// 推荐使用千帆平台支持的基础模型，如 ernie-3.5-8k、ernie-4.0-8k、ernie-speed-8k 等
-const DEFAULT_MODEL = 'ernie-3.5-8k'
+
+// 环境变量 > 本地配置 > 占位符
+const getApiKey = () =>
+  (typeof process !== 'undefined' && process.env && process.env.QIANFAN_API_KEY) ||
+  config.apiKey ||
+  'YOUR_QIANFAN_API_KEY'
+
+const getModel = () =>
+  (typeof process !== 'undefined' && process.env && process.env.QIANFAN_MODEL) ||
+  config.model ||
+  'ernie-3.5-8k'
 
 /**
  * 发起一次对话请求
  * @param {Array} messages 形如 [{ role: 'user', content: '...' }]
- * @param {Object} options 可选参数（temperature 等）
+ * @param {Object} options 可选参数（temperature、model 等）
  * @returns {Promise<string>} AI 回复文本
  */
 export function chat(messages, options = {}) {
@@ -27,14 +43,14 @@ export function chat(messages, options = {}) {
       url: QIANFAN_CHAT_URL,
       method: 'POST',
       data: JSON.stringify({
-        model: options.model || DEFAULT_MODEL,
+        model: options.model || getModel(),
         messages,
         temperature: options.temperature != null ? options.temperature : 0.8,
         stream: false
       }),
       header: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + QIANFAN_API_KEY
+        'Authorization': 'Bearer ' + getApiKey()
       },
       responseType: 'json',
       timeout: 20000,

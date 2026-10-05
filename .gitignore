@@ -4,3 +4,6 @@ build/
 .icon_gen/
 *.rpk
 .DS_Store
+
+# 本地 AI 配置（含敏感密钥），勿提交
+src/config/ai.config.local.js
