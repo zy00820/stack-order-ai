@@ -1,0 +1,237 @@
+<template>
+  <div class="page">
+    <!-- 顶部标题栏 -->
+    <div class="header">
+      <text class="header-title">栈序AI</text>
+    </div>
+
+    <!-- 对话消息区 -->
+    <div class="msg-list" id="msgList">
+      <block for="{{messages}}">
+        <div class="msg-row {{$item.role === 'user' ? 'row-user' : 'row-ai'}}">
+          <div class="bubble {{$item.role === 'user' ? 'bubble-user' : 'bubble-ai'}}">
+            <text class="bubble-text">{{$item.content}}</text>
+          </div>
+        </div>
+      </block>
+      <div class="typing" if="{{loading}}">
+        <text class="typing-text">栈序AI思考中...</text>
+      </div>
+    </div>
+
+    <!-- 快捷问题 -->
+    <div class="chips" if="{{showChips}}">
+      <block for="{{quickPrompts}}">
+        <div class="chip" onclick="sendQuick($item)">
+          <text class="chip-text">{{$item}}</text>
+        </div>
+      </block>
+    </div>
+
+    <!-- 输入区 -->
+    <div class="input-bar">
+      <input
+        class="input-box"
+        type="text"
+        placeholder="输入你的问题…"
+        value="{{inputValue}}"
+        onchange="onInput"
+      />
+      <input
+        type="button"
+        class="send-btn"
+        value="发送"
+        onclick="send"
+      />
+    </div>
+  </div>
+</template>
+
+<style>
+@tailwind utilities;
+
+.page {
+  flex-direction: column;
+  align-items: stretch;
+  height: 100%;
+  background-color: #0b1020;
+}
+
+.header {
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 96px;
+  background-color: #0f1626;
+  border-bottom-width: 2px;
+  border-bottom-color: #1b2440;
+}
+
+.header-title {
+  font-size: 34px;
+  font-weight: bold;
+  color: #5cc8ff;
+}
+
+.msg-list {
+  flex: 1;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.msg-row {
+  width: 100%;
+  flex-direction: column;
+  margin-bottom: 18px;
+}
+
+.row-user {
+  align-items: flex-end;
+}
+
+.row-ai {
+  align-items: flex-start;
+}
+
+.bubble {
+  max-width: 80%;
+  padding: 18px 22px;
+  border-radius: 24px;
+}
+
+.bubble-user {
+  background-color: #1d6fff;
+}
+
+.bubble-ai {
+  background-color: #1c2438;
+}
+
+.bubble-text {
+  font-size: 28px;
+  color: #f2f5ff;
+  line-height: 1.4;
+}
+
+.typing {
+  align-items: flex-start;
+  padding: 10px 4px;
+}
+
+.typing-text {
+  font-size: 26px;
+  color: #8a94ab;
+}
+
+.chips {
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 8px 16px 16px 16px;
+}
+
+.chip {
+  margin: 6px 6px 0 0;
+  padding: 12px 22px;
+  border-radius: 40px;
+  background-color: #1c2438;
+  border-width: 2px;
+  border-color: #2a3554;
+}
+
+.chip-text {
+  font-size: 26px;
+  color: #bcd3ff;
+}
+
+.input-bar {
+  flex-direction: row;
+  align-items: center;
+  padding: 16px;
+  background-color: #0f1626;
+}
+
+.input-box {
+  flex: 1;
+  height: 76px;
+  padding: 0 24px;
+  border-radius: 40px;
+  background-color: #1c2438;
+  color: #f2f5ff;
+  font-size: 28px;
+}
+
+.send-btn {
+  width: 128px;
+  height: 76px;
+  margin-left: 16px;
+  border-radius: 40px;
+  background-color: #1d6fff;
+  color: #ffffff;
+  font-size: 28px;
+}
+</style>
+
+<script>
+import { chat } from '../../api/qianfan.js'
+
+export default {
+  data: {
+    messages: [],
+    inputValue: '',
+    loading: false,
+    showChips: true,
+    quickPrompts: ['你是谁', '今天适合跑步吗', '讲个笑话']
+  },
+
+  onInput(e) {
+    this.inputValue = e.detail.value
+  },
+
+  sendQuick(text) {
+    this.sendText(text)
+  },
+
+  send() {
+    const value = this.inputValue.trim()
+    if (!value || this.loading) return
+    this.sendText(value)
+    this.inputValue = ''
+  },
+
+  sendText(text) {
+    // 用户消息上屏
+    this.messages.push({ role: 'user', content: text })
+    this.loading = true
+    this.showChips = false
+
+    const history = this.messages.slice(-20).map((m) => ({
+      role: m.role,
+      content: m.content
+    }))
+
+    chat(history)
+      .then((reply) => {
+        this.messages.push({ role: 'assistant', content: reply })
+        this.loading = false
+      })
+      .catch((err) => {
+        this.messages.push({
+          role: 'assistant',
+          content: '抱歉，网络开小差了：' + err.message
+        })
+        this.loading = false
+      })
+  },
+
+  scrollToBottom() {
+    // 手表屏幕较小，滚动到底部展示最新对话
+    if (this.$element && this.$element('msgList')) {
+      this.$element('msgList').scrollTo({ offset: 99999 })
+    }
+  },
+
+  onShow() {
+    this.scrollToBottom()
+  }
+}
+</script>

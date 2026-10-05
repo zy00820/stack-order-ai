@@ -1,0 +1,17 @@
+/**
+ * 栈序AI - 应用入口文件
+ * 适配 iQOO Watch GT2 (BlueOS 3)
+ */
+import { registerApp } from '@vivo/app'
+
+registerApp({
+  onLaunch() {
+    console.log('[栈序AI] 应用启动')
+  },
+  onShow() {
+    console.log('[栈序AI] 应用回到前台')
+  },
+  onHide() {
+    console.log('[栈序AI] 应用退到后台')
+  }
+})

@@ -1,0 +1,29 @@
+{
+  "package": "com.zhanxu.ai",
+  "name": "栈序AI",
+  "icon": "/icon.png",
+  "versionName": "1.0.0",
+  "versionCode": 1,
+  "appCategory": [
+    "utilities"
+  ],
+  "deviceTypeList": [
+    "watch"
+  ],
+  "config": {
+    "designWidth": 466
+  },
+  "features": [
+    {
+      "name": "blueos.network.fetch"
+    }
+  ],
+  "router": {
+    "entry": "pages/Chat",
+    "pages": {
+      "pages/Chat": {
+        "component": "index"
+      }
+    }
+  }
+}

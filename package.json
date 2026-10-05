@@ -1,0 +1,8 @@
+{
+  "name": "stack-order-ai",
+  "version": "1.0.0",
+  "description": "栈序AI - 适配 iQOO Watch GT2 (BlueOS 3) 的百度千帆智能助手",
+  "scripts": {},
+  "dependencies": {},
+  "devDependencies": {}
+}
